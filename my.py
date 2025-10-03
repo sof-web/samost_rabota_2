@@ -1,16 +1,22 @@
-# Создание словаря (хэш-таблицы)
-student = {"name": "Alice", "age": 20, "grade": "A"}
-
-# Добавление элемента
-student["city"] = "Moscow"
-
-# Получение значения
-print(student["name"])  # Alice
-
-# Проверка наличия ключа
-if "age" in student:
-    print(student["age"])  # 20
-
-# Итерация по элементам
-for key, value in student.items():
-    print(f"{key}: {value}")
+class HashTable:
+    def __init__(self, size=10):
+        self.size = size
+        self.table = [[] for _ in range(size)]
+    
+    def _hash(self, key):
+        return hash(key) % self.size
+    
+    def put(self, key, value):
+        index = self._hash(key)
+        for i, (k, v) in enumerate(self.table[index]):
+            if k == key:
+                self.table[index][i] = (key, value)
+                return
+        self.table[index].append((key, value))
+    
+    def get(self, key):
+        index = self._hash(key)
+        for k, v in self.table[index]:
+            if k == key:
+                return v
+        raise KeyError(key)
