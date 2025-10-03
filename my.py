@@ -1,22 +1,22 @@
-class HashTable:
-    def __init__(self, size=10):
-        self.size = size
-        self.table = [[] for _ in range(size)]
-    
-    def _hash(self, key):
-        return hash(key) % self.size
-    
-    def put(self, key, value):
-        index = self._hash(key)
-        for i, (k, v) in enumerate(self.table[index]):
-            if k == key:
-                self.table[index][i] = (key, value)
-                return
-        self.table[index].append((key, value))
-    
-    def get(self, key):
-        index = self._hash(key)
-        for k, v in self.table[index]:
-            if k == key:
-                return v
-        raise KeyError(key)
+# Использование встроенного словаря
+student = {}  # создание хеш-таблицы
+
+# Добавление элементов
+student["name"] = "Alice"
+student["age"] = 20
+student["grade"] = "A"
+
+# Получение значений
+print(student["name"])    # Alice
+print(student.get("age")) # 20
+
+# Проверка наличия ключа
+if "grade" in student:
+    print("Есть оценка")
+
+# Удаление
+del student["grade"]
+
+# Перебор всех элементов
+for key, value in student.items():
+    print(f"{key}: {value}")
