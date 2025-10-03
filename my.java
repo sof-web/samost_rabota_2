@@ -1,57 +1,29 @@
-public class HashTable<K, V> {
-    private static class Entry<K, V> {
-        K key;
-        V value;
-        Entry<K, V> next;
+import java.util.HashMap;
+
+public class SimpleHashTable {
+    public static void main(String[] args) {
+        // Создание хеш-таблицы
+        HashMap<String, String> student = new HashMap<>();
         
-        Entry(K key, V value) {
-            this.key = key;
-            this.value = value;
+        // Добавление элементов
+        student.put("name", "Alice");
+        student.put("age", "20");
+        student.put("grade", "A");
+        
+        // Получение значений
+        System.out.println(student.get("name"));  // Alice
+        
+        // Проверка наличия ключа
+        if (student.containsKey("age")) {
+            System.out.println("Возраст есть");
+        }
+        
+        // Удаление
+        student.remove("grade");
+        
+        // Перебор всех элементов
+        for (String key : student.keySet()) {
+            System.out.println(key + ": " + student.get(key));
         }
     }
-    
-    private Entry<K, V>[] table;
-    private int capacity;
-    
-    @SuppressWarnings("unchecked")
-    public HashTable(int capacity) {
-        this.capacity = capacity;
-        this.table = new Entry[capacity];
-    }
-    
-    private int hash(K key) {
-        return Math.abs(key.hashCode()) % capacity;
-    }
-    
-    public void put(K key, V value) {
-        int index = hash(key);
-        Entry<K, V> newEntry = new Entry<>(key, value);
-        
-        if (table[index] == null) {
-            table[index] = newEntry;
-        } else {
-            Entry<K, V> current = table[index];
-            while (current.next != null) {
-                if (current.key.equals(key)) {
-                    current.value = value;
-                    return;
-                }
-                current = current.next;
-            }
-            current.next = newEntry;
-        }
-    }
-    
-    public V get(K key) {
-        int index = hash(key);
-        Entry<K, V> current = table[index];
-        
-        while (current != null) {
-            if (current.key.equals(key)) {
-                return current.value;
-            }
-            current = current.next;
-        }
-        return null;
-    }
-              }
+}
